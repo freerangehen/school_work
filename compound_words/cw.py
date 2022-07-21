@@ -78,11 +78,24 @@ class CompoundWordDB:
         """
         key = random.choice(list(self._first_dict_th.keys()))
         options = random.choices(list(self._first_dict_th[key]), k=self._first_th)
-        return key, options
+        return key, list(set(options))
 
 
 if __name__ == "__main__":
     args_ = _get_args()
     cw = CompoundWordDB(args_.src_file)
+    TRIES = 5
+    while True:
+        first, others = cw.common_first_quiz()
+        ans = ""
+        print("<--- New Question --->")
+        for tries in range(TRIES):
+            ans = input(f"what word can be added to the front of all of {others} to make {len(others)} compound words? ")
+            if ans == first:
+                print("Correct!")
+                break
+            print("Try again")
+        if tries == TRIES - 1:
+            print(f"Answer is {first}")
     import pdb; pdb.set_trace()
     pass
